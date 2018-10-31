@@ -1,2 +1,2 @@
-source venv_deploy/bin/activate
+source venv_lambda/bin/activate
 python -m py.lambda

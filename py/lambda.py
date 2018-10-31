@@ -32,16 +32,16 @@ def archive_website():
         if url and website.get('category') != 'Video':
             name = website.get('title')
             key = name
-            filename = key + '.pdf'
             print(key)
             if key not in website_state:
-                extract_website(url, filename)
-                upload_website(filename)
-                website_state[key] = {
-                    "url": url,
-                    "name": name,
-                    "fetched": now
-                }
+                filename = extract_website(url, key)
+                if filename:
+                    upload_website(filename)
+                    website_state[key] = {
+                        "url": url,
+                        "name": name,
+                        "fetched": now
+                    }
 
     state['website'] = website_state
     upload_state(state)
