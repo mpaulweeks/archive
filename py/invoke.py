@@ -1,18 +1,18 @@
 import json
 from .aws import (
     FUNCTION_NAME,
-    get_client,
+    get_lambda,
 )
 
 FORCE_TEST = """
 {
-  "force_email": true
+  "manual": true
 }
 """.strip()
 
 
 def invoke():
-    lambda_client = get_client()
+    lambda_client = get_lambda()
     res = lambda_client.invoke(
         FunctionName=FUNCTION_NAME,
         InvocationType="RequestResponse",
@@ -22,7 +22,7 @@ def invoke():
     if res_json:
         print(res_json)
     else:
-        raise Exception("health check failed")
+        raise Exception("archive failed")
 
 
 if __name__ == "__main__":
