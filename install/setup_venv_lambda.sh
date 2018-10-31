@@ -4,4 +4,5 @@
 . venv_lambda/bin/activate
 pip install requests[security]
 pip install boto3
+pip install pdfkit
 deactivate

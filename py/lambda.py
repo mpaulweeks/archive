@@ -11,10 +11,10 @@ from .state import (
     download_state,
     upload_state,
 )
-from .s3 import {
+from .s3 import (
     upload_website,
     upload_youtube,
-}
+)
 from .extract import (
     extract_website,
     extract_youtube,
@@ -29,13 +29,14 @@ def archive_website():
 
     for website in bookmarks.get('links', []):
         url = website.get('url')
-        if url:
-            name = website.get('name')
+        if url and website.get('category') != 'Video':
+            name = website.get('title')
             key = name
+            filename = key + '.pdf'
             print(key)
             if key not in website_state:
-                extract_website(url, key)
-                upload_website(key)
+                extract_website(url, filename)
+                upload_website(filename)
                 website_state[key] = {
                     "url": url,
                     "name": name,
@@ -61,4 +62,4 @@ def lambda_handler(json_input, context):
 
 if __name__ == "__main__":
     manual = len(sys.argv) > 1
-    return run(manual)
+    run(manual)

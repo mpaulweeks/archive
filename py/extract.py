@@ -1,7 +1,7 @@
+import pdfkit
 
 def extract_website(url, filename):
-    # todo
-    pass
+    pdfkit.from_url(url, "temp/%s.pdf" % filename)
 
 def extract_youtube(url, filename):
     # todo

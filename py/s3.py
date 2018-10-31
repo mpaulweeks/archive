@@ -9,7 +9,6 @@ def upload_file(destination, filename):
         pass
 
 
-
 def upload_website(filename):
     upload_file('website', filename)
 

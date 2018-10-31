@@ -1,8 +1,8 @@
 
 def download_state():
     # todo
-    pass
+    return {}
 
-def upload_state():
+def upload_state(state):
     # todo
-    pass
+    print(state)
