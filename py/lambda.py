@@ -3,55 +3,22 @@ from datetime import datetime
 import os
 import sys
 
-import requests
-
-from .aws import (
-    get_bucket,
+from .bookmarks import (
+    fetch_bookmarks_website,
+    fetch_bookmarks_youtube,
 )
-
-
-def upload_file(destination, filename):
-    lambda_client = get_client()
-    with open('temp/%s' % filename, 'rb') as f:
-        # todo
-        pass
-
-
-
-def upload_website(filename):
-    upload_file('website', filename)
-
-def upload_youtube(filename):
-    upload_file('youtube', filename)
-
-
-
-def download_state():
-    pass
-
-def upload_state():
-    pass
-
-
-
-def fetch_bookmarks_website():
-    url = "http://blog.mpaulweeks.com/data/bookmarks.json"
-    response = requests.get(url)
-    return response.json()
-
-def fetch_bookmarks_youtube():
-    url = "http://blog.mpaulweeks.com/data/youtube-generated.json"
-    response = requests.get(url)
-    return response.json()
-
-
-
-def download_website(url, filename):
-    pass
-
-def download_youtube(url, filename):
-    pass
-
+from .state import (
+    download_state,
+    upload_state,
+)
+from .s3 import {
+    upload_website,
+    upload_youtube,
+}
+from .extract import (
+    extract_website,
+    extract_youtube,
+)
 
 
 def archive_website():
@@ -67,7 +34,7 @@ def archive_website():
             key = name
             print(key)
             if key not in website_state:
-                download_website(url, key)
+                extract_website(url, key)
                 upload_website(key)
                 website_state[key] = {
                     "url": url,

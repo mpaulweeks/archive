@@ -1,3 +1,6 @@
 
+# venv
+venv_*/
+
 # temp dir for downloads
 temp/
