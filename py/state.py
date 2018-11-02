@@ -10,7 +10,7 @@ def load_state():
     with open('temp/data.json', 'r') as f:
         return json.load(f)
 
-def upload_state(state):
+def save_state(state):
     with open('temp/data.json', 'w') as f:
         return json.dump(state, f)
     upload_file('', 'data.json')

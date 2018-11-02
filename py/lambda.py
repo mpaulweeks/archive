@@ -8,8 +8,8 @@ from .bookmarks import (
     fetch_bookmarks_youtube,
 )
 from .state import (
-    download_state,
-    upload_state,
+    load_state,
+    save_state,
 )
 from .s3 import (
     upload_website,
@@ -28,7 +28,7 @@ def get_now():
 def archive_website():
     now = get_now()
     bookmarks = fetch_bookmarks_website()
-    state = download_state()
+    state = load_state()
     website_state = state.get('website', {})
     remaining = 3
 
@@ -52,18 +52,24 @@ def archive_website():
             break
 
     state['website'] = website_state
-    upload_state(state)
+    save_state(state)
 
 def archive_youtube():
     now = get_now()
     videos = fetch_bookmarks_youtube()
-    state = download_state()
+    state = load_state()
     youtube_state = state.get('youtube', {})
     remaining = 3
 
     for video in videos:
-        vid = youtube.get('url')
-        name = youtube.get('title')
+        print(video)
+        vid = video.get('vid')
+
+        # todo
+        if vid != 'aiM5KDuHrR4':
+            continue
+
+        name = video.get('title')
         key = '%s - %s.mp4' % (
             vid, name
         )
@@ -78,11 +84,11 @@ def archive_youtube():
                     "fetched": now
                 }
                 remaining -= 1
-    if remaining < 1:
-        break
+        if remaining < 1:
+            break
 
-    state['youtube'] = website_state
-    upload_state(state)
+    state['youtube'] = youtube_state
+    save_state(state)
 
 
 

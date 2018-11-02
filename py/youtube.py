@@ -8,8 +8,8 @@ def extract_youtube(vid, filename):
         'format': '137', # mp4 1080p
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        out = ydl.download([url])
-        print(out)
+        ydl.download([url])
+        return filename
 
 import sys
 if __name__ == '__main__':
