@@ -15,14 +15,18 @@ from .s3 import (
     upload_website,
     upload_youtube,
 )
-from .extract import (
+from .pdf import (
     extract_website,
+)
+from .youtube import (
     extract_youtube,
 )
 
+def get_now():
+    return datetime.utcnow().strftime("%Y/%m/%d")
 
 def archive_website():
-    now = datetime.utcnow().strftime("%Y/%m/%d")
+    now = get_now()
     bookmarks = fetch_bookmarks_website()
     state = download_state()
     website_state = state.get('website', {})
