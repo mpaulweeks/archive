@@ -30,6 +30,7 @@ def archive_website():
     bookmarks = fetch_bookmarks_website()
     state = download_state()
     website_state = state.get('website', {})
+    remaining = 3
 
     for website in bookmarks.get('links', []):
         url = website.get('url')
@@ -46,18 +47,47 @@ def archive_website():
                         "name": name,
                         "fetched": now
                     }
+                    remaining -= 1
+        if remaining < 1:
+            break
 
     state['website'] = website_state
     upload_state(state)
 
 def archive_youtube():
-    # todo
-    pass
+    now = get_now()
+    videos = fetch_bookmarks_youtube()
+    state = download_state()
+    youtube_state = state.get('youtube', {})
+    remaining = 3
+
+    for video in videos:
+        vid = youtube.get('url')
+        name = youtube.get('title')
+        key = '%s - %s.mp4' % (
+            vid, name
+        )
+        print(key)
+        if key not in youtube_state:
+            filename = extract_youtube(vid, key)
+            if filename:
+                upload_youtube(filename)
+                youtube_state[key] = {
+                    "vid": vid,
+                    "name": name,
+                    "fetched": now
+                }
+                remaining -= 1
+    if remaining < 1:
+        break
+
+    state['youtube'] = website_state
+    upload_state(state)
 
 
 
 def run(manual):
-    archive_website()
+    # archive_website()
     archive_youtube()
 
 def lambda_handler(json_input, context):
