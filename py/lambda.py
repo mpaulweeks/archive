@@ -34,10 +34,10 @@ def archive_website(state):
         url = website.get('url')
         if url and website.get('category') != 'Video':
             name = website.get('title')
-            key = name
-            print(key)
+            key = url
+            save_as = name
             if key not in website_state:
-                filename = extract_website(url, key)
+                filename = extract_website(url, save_as)
                 if filename:
                     upload_website(filename)
                     website_state[key] = {
@@ -57,20 +57,19 @@ def archive_youtube(state):
     remaining = 3
 
     for video in videos:
-        print(video)
         vid = video.get('vid')
+        name = video.get('title')
 
         # todo
-        if vid != 'aiM5KDuHrR4':
-            continue
+        # if vid != 'aiM5KDuHrR4':
+        #     continue
 
-        name = video.get('title')
-        key = '%s - %s.mp4' % (
+        key = vid
+        save_as = '%s - %s.mp4' % (
             vid, name
         )
-        print(key)
         if key not in youtube_state:
-            filename = extract_youtube(vid, key)
+            filename = extract_youtube(vid, save_as)
             if filename:
                 upload_youtube(filename)
                 youtube_state[key] = {

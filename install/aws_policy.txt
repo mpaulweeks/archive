@@ -1,16 +1,20 @@
 {
+    "Id": "Policy1541430805732",
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "Stmt1535218510000",
-            "Effect": "Allow",
+            "Sid": "Stmt1541430801206",
             "Action": [
-                "lambda:InvokeFunction",
-                "lambda:UpdateFunctionCode"
+                "s3:GetObject",
+                "s3:PutObject"
             ],
-            "Resource": [
-                "arn:aws:lambda:us-west-2:317856666432:function:archive"
-            ]
+            "Effect": "Allow",
+            "Resource": "arn:aws:s3:::mpaulweeks-archive/*",
+            "Principal": {
+                "AWS": [
+                    "arn:aws:iam::988820348419:user/archive"
+                ]
+            }
         }
     ]
 }

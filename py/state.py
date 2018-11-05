@@ -11,6 +11,7 @@ def load_state():
         return json.load(f)
 
 def save_state(state):
+    print(state)
     with open('temp/data.json', 'w') as f:
-        return json.dump(state, f)
+        json.dump(state, f)
     upload_file('', 'data.json')

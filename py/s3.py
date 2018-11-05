@@ -3,7 +3,7 @@ from .aws import (
 )
 
 def upload_file(dest_dir, file_name):
-    file_path = 'temp/%s' % file_name
+    file_path = "temp/%s" % file_name
     destination = "%s%s" % (dest_dir, file_name)
     print("uploading %s to %s" % (file_path, destination))
     with open(file_path, 'rb') as data:
