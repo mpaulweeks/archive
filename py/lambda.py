@@ -25,10 +25,8 @@ from .youtube import (
 def get_now():
     return datetime.utcnow().strftime("%Y/%m/%d")
 
-def archive_website():
-    now = get_now()
+def archive_website(state):
     bookmarks = fetch_bookmarks_website()
-    state = load_state()
     website_state = state.get('website', {})
     remaining = 3
 
@@ -45,19 +43,16 @@ def archive_website():
                     website_state[key] = {
                         "url": url,
                         "name": name,
-                        "fetched": now
+                        "fetched": get_now(),
                     }
                     remaining -= 1
         if remaining < 1:
             break
-
     state['website'] = website_state
-    save_state(state)
 
-def archive_youtube():
+def archive_youtube(state):
     now = get_now()
     videos = fetch_bookmarks_youtube()
-    state = load_state()
     youtube_state = state.get('youtube', {})
     remaining = 3
 
@@ -81,20 +76,30 @@ def archive_youtube():
                 youtube_state[key] = {
                     "vid": vid,
                     "name": name,
-                    "fetched": now
+                    "fetched": get_now(),
                 }
                 remaining -= 1
         if remaining < 1:
             break
-
     state['youtube'] = youtube_state
-    save_state(state)
 
 
 
 def run(manual):
-    # archive_website()
-    archive_youtube()
+    state = load_state()
+
+    try:
+        # archive_website(state)
+        pass
+    except Exception as e:
+        pass
+
+    try:
+        archive_youtube(state)
+    except Exception as e:
+        pass
+
+    save_state(state)
 
 def lambda_handler(json_input, context):
     manual = json_input.get('manual')
