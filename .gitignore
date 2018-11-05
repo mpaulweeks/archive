@@ -4,3 +4,6 @@ venv_*/
 
 # temp dir for downloads
 temp/
+
+# build dir for lambda
+build/
