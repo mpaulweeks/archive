@@ -5,5 +5,5 @@ cd ../../../../
 
 # add the lambda script to the zip
 cd py/
-zip -g ../build/lambda.zip lambda.py
+zip -g ../build/lambda.zip *.py
 cd ../
