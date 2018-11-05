@@ -54,7 +54,7 @@ def archive_youtube(state):
     now = get_now()
     videos = fetch_bookmarks_youtube()
     youtube_state = state.get('youtube', {})
-    remaining = 3
+    remaining = 1
 
     for video in videos:
         vid = video.get('vid')
