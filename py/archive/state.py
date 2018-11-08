@@ -14,4 +14,4 @@ def save_state(state):
     print(json.dumps(state, sort_keys=True, indent=4))
     with open('temp/data.json', 'w') as f:
         json.dump(state, f)
-    upload_file('', 'data.json')
+    upload_file('', 'data.json', 'public-read')
