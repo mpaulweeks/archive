@@ -1,5 +1,5 @@
 import json
-from .aws import (
+from archive.aws import (
     FUNCTION_NAME,
     get_lambda,
 )

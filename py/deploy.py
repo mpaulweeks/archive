@@ -1,4 +1,4 @@
-from .aws import (
+from archive.aws import (
     set_lambda,
 )
 

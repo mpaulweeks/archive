@@ -1,6 +1,6 @@
 import json
 
-from .s3 import (
+from archive.s3 import (
     download_file,
     upload_file,
 )

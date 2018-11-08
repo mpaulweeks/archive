@@ -1,2 +1,3 @@
 source venv_lambda/bin/activate
-python -m py.lambda
+cd py
+python -m lambda

@@ -3,22 +3,22 @@ from datetime import datetime
 import os
 import sys
 
-from .bookmarks import (
+from archive.bookmarks import (
     fetch_bookmarks_website,
     fetch_bookmarks_youtube,
 )
-from .state import (
+from archive.state import (
     load_state,
     save_state,
 )
-from .s3 import (
+from archive.s3 import (
     upload_website,
     upload_youtube,
 )
-from .pdf import (
+from archive.pdf import (
     extract_website,
 )
-from .youtube import (
+from archive.youtube import (
     extract_youtube,
 )
 
