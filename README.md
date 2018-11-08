@@ -15,5 +15,6 @@ Automated archival of treasured websites / videos
 ## todo
 
 - handle forward slashes in file names
+- have a way to skip assets and/or put them as low-priority
 - download pdfs
 - create docker container?
