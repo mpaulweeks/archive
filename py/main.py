@@ -98,6 +98,9 @@ def run(manual):
     except Exception as e:
         pass
 
+    state['meta'] = {
+        'updated': get_now(),
+    }
     save_state(state)
 
 if __name__ == "__main__":
