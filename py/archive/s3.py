@@ -1,4 +1,4 @@
-from archive.aws import (
+from py.archive.aws import (
     get_bucket,
 )
 

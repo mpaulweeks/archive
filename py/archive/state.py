@@ -1,6 +1,6 @@
 import json
 
-from archive.s3 import (
+from py.archive.s3 import (
     download_file,
     upload_file,
 )

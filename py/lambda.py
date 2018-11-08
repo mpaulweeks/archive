@@ -3,22 +3,22 @@ from datetime import datetime
 import os
 import sys
 
-from archive.bookmarks import (
+from py.archive.bookmarks import (
     fetch_bookmarks_website,
     fetch_bookmarks_youtube,
 )
-from archive.state import (
+from py.archive.state import (
     load_state,
     save_state,
 )
-from archive.s3 import (
+from py.archive.s3 import (
     upload_website,
     upload_youtube,
 )
-from archive.pdf import (
+from py.archive.pdf import (
     extract_website,
 )
-from archive.youtube import (
+from py.archive.youtube import (
     extract_youtube,
 )
 
@@ -85,6 +85,9 @@ def archive_youtube(state):
 
 
 def run(manual):
+    print('hello')
+    return
+    
     state = load_state()
 
     try:
