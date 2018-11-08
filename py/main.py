@@ -92,7 +92,7 @@ def run(manual):
         pass
 
     try:
-        # archive_youtube(state)
+        archive_youtube(state)
         pass
     except Exception as e:
         pass
