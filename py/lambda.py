@@ -85,9 +85,6 @@ def archive_youtube(state):
 
 
 def run(manual):
-    print('hello')
-    return
-    
     state = load_state()
 
     try:
