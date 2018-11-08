@@ -62,10 +62,6 @@ def archive_youtube(state):
         vid = video.get('vid')
         name = video.get('title')
 
-        # todo
-        # if vid != 'aiM5KDuHrR4':
-        #     continue
-
         key = vid
         save_as = sanitize('%s - %s' % (
             vid, name
@@ -90,13 +86,14 @@ def run(manual):
     state = load_state()
 
     try:
-        # archive_website(state)
+        archive_website(state)
         pass
     except Exception as e:
         pass
 
     try:
-        archive_youtube(state)
+        # archive_youtube(state)
+        pass
     except Exception as e:
         pass
 
