@@ -22,7 +22,7 @@ from py.archive.youtube import (
     extract_youtube,
 )
 
-def get_now():
+def get_today():
     return datetime.utcnow().strftime("%Y/%m/%d")
 
 def archive_website(state):
@@ -43,7 +43,7 @@ def archive_website(state):
                     website_state[key] = {
                         "url": url,
                         "name": name,
-                        "fetched": get_now(),
+                        "fetched": get_today(),
                     }
                     remaining -= 1
         if remaining < 1:
@@ -51,7 +51,6 @@ def archive_website(state):
     state['website'] = website_state
 
 def archive_youtube(state):
-    now = get_now()
     videos = fetch_bookmarks_youtube()
     youtube_state = state.get('youtube', {})
     remaining = 1
@@ -75,7 +74,7 @@ def archive_youtube(state):
                 youtube_state[key] = {
                     "vid": vid,
                     "name": name,
-                    "fetched": get_now(),
+                    "fetched": get_today(),
                 }
                 remaining -= 1
         if remaining < 1:
@@ -99,7 +98,7 @@ def run(manual):
         pass
 
     state['meta'] = {
-        'updated': get_now(),
+        'updated': datetime.utcnow().isoformat(),
     }
     save_state(state)
 
