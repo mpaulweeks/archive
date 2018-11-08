@@ -1,3 +1,5 @@
+import os
+
 from py.archive.aws import (
     get_bucket,
 )
@@ -8,6 +10,8 @@ def upload_file(dest_dir, file_name):
     print("uploading %s to %s" % (file_path, destination))
     with open(file_path, 'rb') as data:
         get_bucket().put_object(Key=destination, Body=data)
+    print("done! now deleting: %s" % file_path)
+    os.remove(file_path)
 
 def download_file(s3_path, local_path):
     print ("downloading %s to %s" % (s3_path, local_path))
