@@ -25,6 +25,9 @@ from py.archive.youtube import (
 def get_today():
     return datetime.utcnow().strftime("%Y/%m/%d")
 
+def sanitize(filename):
+    return filename.replace('/', '_')
+
 def archive_website(state):
     bookmarks = fetch_bookmarks_website()
     website_state = state.get('website', {})
@@ -35,7 +38,7 @@ def archive_website(state):
         if url and website.get('category') != 'Video':
             name = website.get('title')
             key = url
-            save_as = name
+            save_as = sanitize(name)
             if key not in website_state:
                 filename = extract_website(url, save_as)
                 if filename:
@@ -64,9 +67,9 @@ def archive_youtube(state):
         #     continue
 
         key = vid
-        save_as = '%s - %s.mp4' % (
+        save_as = sanitize('%s - %s' % (
             vid, name
-        )
+        ))
         if key not in youtube_state:
             filename = extract_youtube(vid, save_as)
             if filename:

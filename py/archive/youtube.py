@@ -3,18 +3,28 @@ import youtube_dl
 
 # https://www.genyoutube.net/formats-resolution-youtube-videos.html
 format_prefs = [
-    '137', # mp4 1080p
-    '136', # mp4 720p
-    '135', # mp4 480p
+    {
+        'format': '137', # mp4 1080p
+        'ext': 'mp4',
+    },
+    {
+        'format': '136', # mp4 720p
+        'ext': 'mp4',
+    },
+    {
+        'format': '135', # mp4 480p
+        'ext': 'mp4',
+    },
 ]
 
-def extract_youtube(vid, filename):
+def extract_youtube(vid, save_as):
     url = 'https://youtube.com/watch?v=%s' % vid
-    ydl_opts = {
-        'outtmpl': 'temp/%s' % filename,
-    }
     for format in format_prefs:
-        ydl_opts['format'] = format
+        filename = '%s.%s' % (save_as, format['ext'])
+        ydl_opts = {
+            'outtmpl': 'temp/%s' % filename,
+            'format': format['format'],
+        }
         try:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
