@@ -100,10 +100,6 @@ def run(manual):
 
     save_state(state)
 
-def lambda_handler(json_input, context):
-    manual = json_input.get('manual')
-    return run(manual)
-
 if __name__ == "__main__":
     manual = len(sys.argv) > 1
     run(manual)
