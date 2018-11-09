@@ -12,11 +12,12 @@ from py.archive.state import (
     save_state,
 )
 from py.archive.s3 import (
-    upload_website,
+    upload_website_pdf,
+    upload_website_zip,
     upload_youtube,
 )
 from py.archive.pdf import (
-    extract_website,
+    extract_website_pdf,
 )
 from py.archive.website import (
     extract_website_zip,
@@ -37,7 +38,7 @@ def sanitize(filename):
     )
 
 def archive_website(state):
-    bookmarks = fetch_bookmarks_websites()
+    bookmarks = fetch_bookmarks_website()
     website_state = state.get('website', {})
     remaining = 3
 
@@ -47,9 +48,9 @@ def archive_website(state):
         key = url
         save_as = sanitize(name)
         if key not in website_state:
-            filename = extract_website(url, save_as)
+            filename = extract_website_pdf(url, save_as)
             if filename:
-                upload_website(filename)
+                upload_website_pdf(filename)
                 website_state[key] = {
                     "url": url,
                     "name": name,
@@ -58,10 +59,12 @@ def archive_website(state):
                 remaining -= 1
         if remaining < 1:
             break
+    if remaining == 3:
+        print('nothing to archive: website')
     state['website'] = website_state
 
 def archive_website_zip(state):
-    bookmarks = fetch_bookmarks_websites()
+    bookmarks = fetch_bookmarks_website()
     zip_state = state.get('website_zip', {})
     remaining = 3
 
@@ -73,7 +76,7 @@ def archive_website_zip(state):
         if key not in zip_state:
             filename = extract_website_zip(url, save_as)
             if filename:
-                upload_website(filename)
+                upload_website_zip(filename)
                 zip_state[key] = {
                     "url": url,
                     "name": name,
@@ -82,6 +85,8 @@ def archive_website_zip(state):
                 remaining -= 1
         if remaining < 1:
             break
+    if remaining == 3:
+        print('nothing to archive: website_zip')
     state['website_zip'] = zip_state
 
 def archive_youtube(state):
@@ -109,16 +114,17 @@ def archive_youtube(state):
                 remaining -= 1
         if remaining < 1:
             break
+    if remaining == 1:
+        print('nothing to archive: youtube')
     state['youtube'] = youtube_state
 
 def run(manual):
     state = load_state()
 
-    try:
-        archive_website(state)
-        pass
-    except Exception as e:
-        pass
+    # try:
+    #     archive_website_zip(state)
+    # except Exception as e:
+    #     pass
 
     try:
         archive_youtube(state)

@@ -1,6 +1,6 @@
 import pdfkit
 
-def extract_website(url, key):
+def extract_website_pdf(url, key):
     filename = "%s.pdf" % key
     try:
         pdfkit.from_url(url, "temp/%s" % filename)

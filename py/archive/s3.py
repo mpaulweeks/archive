@@ -21,8 +21,11 @@ def download_file(s3_path, local_path):
     print ("downloading %s to %s" % (s3_path, local_path))
     get_bucket().download_file(Key=s3_path, Filename=local_path)
 
-def upload_website(file_name):
+def upload_website_pdf(file_name):
     upload_file('website/', file_name, 'private')
+
+def upload_website_zip(file_name):
+    upload_file('website_zip/', file_name, 'private')
 
 def upload_youtube(file_name):
     upload_file('youtube/', file_name, 'private')

@@ -15,9 +15,14 @@ format_prefs = [
         'format': '135', # mp4 480p
         'ext': 'mp4',
     },
+    {
+        'format': '134', # mp4 360p
+        'ext': 'mp4',
+    },
 ]
 
 def extract_youtube(vid, save_as):
+    print('downloading youtube: %s' % save_as)
     url = 'https://youtube.com/watch?v=%s' % vid
     for format in format_prefs:
         filename = '%s.%s' % (save_as, format['ext'])
