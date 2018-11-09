@@ -18,6 +18,9 @@ from py.archive.s3 import (
 from py.archive.pdf import (
     extract_website,
 )
+from py.archive.website import (
+    extract_website_zip,
+)
 from py.archive.youtube import (
     extract_youtube,
 )
@@ -26,32 +29,60 @@ def get_today():
     return datetime.utcnow().strftime("%Y/%m/%d")
 
 def sanitize(filename):
-    return filename.replace('/', '_')
+    return (
+        filename
+            .replace('/', '_')
+            .replace(':', '-')
+            .replace('?', '')
+    )
 
 def archive_website(state):
-    bookmarks = fetch_bookmarks_website()
+    bookmarks = fetch_bookmarks_websites()
     website_state = state.get('website', {})
     remaining = 3
 
-    for website in bookmarks.get('links', []):
+    for website in bookmarks:
         url = website.get('url')
-        if url and website.get('category') != 'Video':
-            name = website.get('title')
-            key = url
-            save_as = sanitize(name)
-            if key not in website_state:
-                filename = extract_website(url, save_as)
-                if filename:
-                    upload_website(filename)
-                    website_state[key] = {
-                        "url": url,
-                        "name": name,
-                        "fetched": get_today(),
-                    }
-                    remaining -= 1
+        name = website.get('title')
+        key = url
+        save_as = sanitize(name)
+        if key not in website_state:
+            filename = extract_website(url, save_as)
+            if filename:
+                upload_website(filename)
+                website_state[key] = {
+                    "url": url,
+                    "name": name,
+                    "fetched": get_today(),
+                }
+                remaining -= 1
         if remaining < 1:
             break
     state['website'] = website_state
+
+def archive_website_zip(state):
+    bookmarks = fetch_bookmarks_websites()
+    zip_state = state.get('website_zip', {})
+    remaining = 3
+
+    for website in bookmarks:
+        url = website.get('url')
+        name = website.get('title')
+        key = url
+        save_as = sanitize(name)
+        if key not in zip_state:
+            filename = extract_website_zip(url, save_as)
+            if filename:
+                upload_website(filename)
+                zip_state[key] = {
+                    "url": url,
+                    "name": name,
+                    "fetched": get_today(),
+                }
+                remaining -= 1
+        if remaining < 1:
+            break
+    state['website_zip'] = zip_state
 
 def archive_youtube(state):
     videos = fetch_bookmarks_youtube()
@@ -79,8 +110,6 @@ def archive_youtube(state):
         if remaining < 1:
             break
     state['youtube'] = youtube_state
-
-
 
 def run(manual):
     state = load_state()

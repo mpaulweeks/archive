@@ -6,4 +6,5 @@ pip install requests[security]
 pip install boto3
 pip install pdfkit
 pip install youtube_dl
+pip install pywebcopy
 deactivate
